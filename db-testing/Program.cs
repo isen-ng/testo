@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using DocumentDbTest.Abstractions;
 using DocumentDbTest.Data;
@@ -17,7 +16,7 @@ namespace DocumentDbTest
         {
             Console.WriteLine("Hello World!");
 
-//            var count = 10000;
+//            var count = 100000;
 //            using (var stream = new FileStream($"data.{count}.json", FileMode.Create))
 //            {
 //                Generator.Generate(count + 2, stream);
@@ -26,7 +25,7 @@ namespace DocumentDbTest
 
             // prepare data
             IEnumerable<Document> data;
-            using (var stream = new FileStream("data.10000.json", FileMode.Open))
+            using (var stream = new FileStream("Data/data.100000.json", FileMode.Open))
             {
                 var serializer = new JsonSerializer();
                 data = serializer.Deserialize<List<Document>>(new JsonTextReader(new StreamReader(stream)));
