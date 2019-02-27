@@ -1,0 +1,7 @@
+.user
+.idea
+
+bin
+obj
+
+.DS_Store
