@@ -6,7 +6,13 @@ namespace Generator
     {
         private static void Main(string[] args)
         {
-            const int count = 500000;
+            Generate(1000);
+            Generate(10000);
+            Generate(100000);
+        }
+
+        private static void Generate(int count)
+        {
             using (var stream = new FileStream($"data.{count}.json", FileMode.Create))
             {
                 Generator.Generate(count, stream);
