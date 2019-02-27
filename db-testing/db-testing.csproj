@@ -11,6 +11,7 @@
     <ItemGroup>
         <PackageReference Include="ArangoDB.Client" Version="0.7.70" />
         <PackageReference Include="Marten" Version="3.3.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="2.2.0" />
         <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.2.0" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
         <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.2.0" />
@@ -30,6 +31,10 @@
         <None Update="hostsettings.json">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Generator\Generator.csproj" />
     </ItemGroup>
     
 </Project>

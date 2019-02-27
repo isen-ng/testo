@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using DocumentDbTest.Abstractions;
-using DocumentDbTest.Data;
+using Generator;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
@@ -16,13 +16,6 @@ namespace DocumentDbTest
         {
             Console.WriteLine("Hello World!");
 
-//            var count = 100000;
-//            using (var stream = new FileStream($"data.{count}.json", FileMode.Create))
-//            {
-//                Generator.Generate(count + 2, stream);
-//                return;
-//            }
-
             // prepare data
             IEnumerable<Document> data;
             using (var stream = new FileStream("Data/data.100000.json", FileMode.Open))
@@ -32,7 +25,7 @@ namespace DocumentDbTest
             }
             
             // prepare writer
-            var appSettings = LoadAppSettings();
+            var appSettings = LoadAppSettings(args);
             var provider = LoadProvider(appSettings.GetSection("DocumentStore"));
 
             // warm up
@@ -45,7 +38,7 @@ namespace DocumentDbTest
 
         private static async Task RunWarmUp(IProvider provider)
         {
-            foreach (var document in Generator.Generate(2))
+            foreach (var document in Generator.Generator.Generate(2))
             {
                 await provider.Store(document.Id, document);
                 await provider.Get<Document>(document.Id);
@@ -97,12 +90,13 @@ namespace DocumentDbTest
             }
         }
         
-        private static IConfiguration LoadAppSettings()
+        private static IConfiguration LoadAppSettings(string[] args)
         {
             var hostSettings = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("hostsettings.json")
                 .AddEnvironmentVariables("NETCORE_")
+                .AddCommandLine(args)
                 .Build();
 
             var environment = hostSettings.GetValue<string>("Environment");
