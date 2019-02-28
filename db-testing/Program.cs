@@ -62,9 +62,11 @@ namespace DocumentDbTest
                 
                     stopwatch.Stop();
 
-                    stream.WriteLine($"{i},{stopwatch.Elapsed}");
+                    stream.WriteLine($"{i},{stopwatch.Elapsed.TotalMilliseconds}");
                     i++;
-                }    
+                }
+                
+                stream.Flush();
             }
         }
         
@@ -84,9 +86,11 @@ namespace DocumentDbTest
                 
                     stopwatch.Stop();
 
-                    stream.WriteLine($"{i},{stopwatch.Elapsed}");
+                    stream.WriteLine($"{i},{stopwatch.Elapsed.TotalMilliseconds}");
                     i++;
-                }    
+                }
+                
+                stream.Flush();
             }
         }
         
