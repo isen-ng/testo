@@ -17,7 +17,7 @@ namespace DocumentDbTest
             Console.WriteLine("Hello World!");
 
             // prepare data
-            IEnumerable<Document> data;
+            List<Document> data;
             using (var stream = new FileStream("Data/data.100000.json", FileMode.Open))
             {
                 var serializer = new JsonSerializer();
@@ -46,11 +46,11 @@ namespace DocumentDbTest
         }
 
 
-        private static async Task RunSingleWrite(IEnumerable<Document> data, IProvider provider)
+        private static async Task RunSingleWrite(IReadOnlyCollection<Document> data, IProvider provider)
         {
             using (var stream = new StreamWriter( 
                 new BufferedStream(
-                new FileStream("single-write.csv", FileMode.Create))))
+                new FileStream($"single-write.{data.Count}.csv", FileMode.Create))))
             {
                 var i = 0;
                 foreach (var document in data)
@@ -70,11 +70,11 @@ namespace DocumentDbTest
             }
         }
         
-        private static async Task RunSingleRead(IEnumerable<Document> data, IProvider provider)
+        private static async Task RunSingleRead(IReadOnlyCollection<Document> data, IProvider provider)
         {
             using (var stream = new StreamWriter( 
                 new BufferedStream(
-                    new FileStream("single-read.csv", FileMode.Create))))
+                    new FileStream($"single-read.{data.Count}.csv", FileMode.Create))))
             {
                 var i = 0;
                 foreach (var document in data)
